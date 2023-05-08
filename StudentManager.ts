@@ -1,5 +1,8 @@
 import { Menu } from "./menu/Menu";
 import { Student } from "./Student";
+import { studentCodeValidation } from "./validate";
+import { studentNameValidation } from "./validate";
+import { classNameValidation } from "./validate";
 var readlineSync = require('readline-sync');
 
 export class StudentManager {
@@ -7,15 +10,24 @@ export class StudentManager {
 
     addStudent(){
         let classDefault : string[]=['C0223G1','C0223H1','C0223A1','C0223E1'];
-        var studentID = (this.students.length > 0) ? this.students.length : 1;
-    
+        let studentID = (this.students.length > 0) ? this.students.length : 1;
         let studentName = readlineSync.question('Name: ');
+        while (!studentNameValidation.test(studentName)) {
+            studentName = readlineSync.question(
+              `\nWrong input, retype the student's name without number or special characters: `
+            );
+        }
         let studentClass = readlineSync.keyInSelect(classDefault,`Enter class: `);
+        while (!classNameValidation.test(studentClass)) {
+            studentClass = readlineSync.question(
+              `\nWrong input, retype the class from 0 - 3: `
+            );
+          }
         let studentAddress = readlineSync.question('Address: ');
         let studentScore = readlineSync.question('Score: ');
         let studentHobby = readlineSync.question('Hobby: ');
         
-        if (studentName && studentClass && studentAddress && studentScore && studentHobby ){
+        if (studentName && studentClass && studentAddress && studentScore && studentHobby){
             let newStudent = new Student(studentID, studentName, studentClass, studentAddress, studentScore, studentHobby)
             this.students.push(newStudent)
             console.log('tao thanh cong');
