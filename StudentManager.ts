@@ -1,0 +1,124 @@
+import { Menu } from "./menu/Menu";
+import { Student } from "./Student";
+var readlineSync = require('readline-sync');
+
+export class StudentManager {
+    students: Student[] = [];
+
+    addStudent(){
+        var studentID = (this.students.length > 0) ? this.students.length : 1;
+    
+        let studentName = readlineSync.question('Name: ');
+        let studentClass = readlineSync.question('Class: ');
+        let studentAddress = readlineSync.question('Address: ');
+        let studentScore = readlineSync.question('Score: ');
+        let studentHobby = readlineSync.question('Hobby: ');
+        
+        if (studentName && studentClass && studentAddress && studentScore && studentHobby ){
+            let newStudent = new Student(studentID, studentName, studentClass, studentAddress, studentScore, studentHobby)
+            this.students.push(newStudent)
+            console.log('tao thanh cong');
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    showStudents(): boolean{
+        let fiveStudents :Student[] = []
+        if(this.students.length > 0){
+            for(let i = 0; i < this.students.length; i++){
+                fiveStudents.push(this.students[i])
+                if (i >= 4){
+                    break;
+                }
+            }
+            console.table(fiveStudents)
+            return true
+        }
+        return false 
+    }
+    searchStudent(): boolean {
+        let inputName = readlineSync.question(`Input Name of Student: `)
+        let listApproximateNameStudent: Student[] = [];
+        this.students.forEach(elements => {
+            if (elements.studentName.toLowerCase().includes(inputName.toLowerCase())) {
+                listApproximateNameStudent.push(elements);
+            }
+        })
+        if (listApproximateNameStudent.length === 0) {
+            console.log(`No data matching! `)
+            return false;
+        } else {
+            console.table(listApproximateNameStudent)
+            return true;
+        }
+    }
+    
+    findIndexStudentByID(){
+        let idStudent = +readlineSync.question(`Nhập id sinh viên: `)
+        return this.students.findIndex(elements => idStudent === elements.studentCode);
+    }
+    
+    editStudent(){
+    let start = true
+    
+    let indexUser = this.findIndexStudentByID()
+    while(start){
+        if( indexUser !== -1){
+            Menu.menuEdit()
+            let chose = +readlineSync.question('Chon: ');
+            switch(chose){
+                case 1 :
+                    let studentName = readlineSync.question('Name: ');
+                    if(studentName && (this.students[indexUser].studentName = studentName)){
+                        console.log("Edit thanh cong");
+                    }
+                    break;
+                case 2 :
+                    let studentClass = readlineSync.question('Class: ');
+                    if(studentClass && (this.students[indexUser].studentClass = studentClass)){
+                        console.log("Edit thanh cong");
+                    }
+                    break;
+                case 3 :
+                    let studentAddress = readlineSync.question('Address: ');
+                    if(studentAddress && (this.students[indexUser].address = studentAddress)){
+                        console.log("Edit thanh cong");
+                    }
+                    break;
+                case 4 :
+                    let studentScore = readlineSync.question('Score: ');
+                    if(studentScore && (this.students[indexUser].score = studentScore)){
+                        console.log("Edit thanh cong");
+                    }
+                    break;
+                case 5 :
+                    let studentHobby = readlineSync.question('Hobby: ');
+                    if(studentHobby && (this.students[indexUser].hobby = studentHobby)){
+                        console.log("Edit thanh cong");
+                    }
+                    break;
+                default:
+                    start  = false;
+                    break;
+            }
+        } else{
+            console.log('Không tìm thấy sinh viên');
+            return false
+        }
+        
+    }
+        
+    }
+    
+    removeStudent(){
+        let index = this.findIndexStudentByID()
+        if(index===-1){
+            console.log(`Not existed Student need to delete!`);
+            return;
+        }
+        this.students.splice(index, 1);
+        console.log('Delete Student Successful!');
+    }
+}
