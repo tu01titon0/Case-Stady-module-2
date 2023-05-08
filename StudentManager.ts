@@ -24,7 +24,17 @@ export class StudentManager {
             );
           }
         let studentAddress = readlineSync.question('Address: ');
+        while (!studentNameValidation.test(studentAddress)) {
+            studentAddress = readlineSync.question(
+              `\nWrong input, retype the student's home town without number or special characters:  `
+            );
+        }
         let studentScore = readlineSync.question('Score: ');
+        while (isNaN(studentScore) || studentScore > 10 || studentScore < 0) {
+            studentScore = +readlineSync.question(
+              `\nWrong input, type in student's score from 0 - 10:  `
+            );
+          }
         let studentHobby = readlineSync.question('Hobby: ');
         
         if (studentName && studentClass && studentAddress && studentScore && studentHobby){
