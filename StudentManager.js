@@ -9,9 +9,10 @@ var StudentManager = /** @class */ (function () {
         this.students = [];
     }
     StudentManager.prototype.addStudent = function () {
+        var classDefault = ['C0223G1', 'C0223H1', 'C0223A1', 'C0223E1'];
         var studentID = (this.students.length > 0) ? this.students.length : 1;
         var studentName = readlineSync.question('Name: ');
-        var studentClass = readlineSync.question('Class: ');
+        var studentClass = readlineSync.keyInSelect(classDefault, "Enter class: ");
         var studentAddress = readlineSync.question('Address: ');
         var studentScore = readlineSync.question('Score: ');
         var studentHobby = readlineSync.question('Hobby: ');

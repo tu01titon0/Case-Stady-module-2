@@ -4,8 +4,8 @@ import { StudentManager } from "./StudentManager";
 var readlineSync = require('readline-sync');
 
 let studentManager = new StudentManager();
-let newStudent1 = new Student(1, 'Manh TU', "10A", "HANOI", 10, "doc sach")
-let newStudent2 = new Student(2, 'Hieu', "10b", "HANOI", 10, "hoc")
+let newStudent1 = new Student(1, 'Manh TU', "C0223G1", "HANOI", 10, "doc sach")
+let newStudent2 = new Student(2, 'Hieu', "C0223G2", "HANOI", 10, "hoc")
 studentManager.students.push(newStudent1, newStudent2);
 
 let start = true;

@@ -6,10 +6,11 @@ export class StudentManager {
     students: Student[] = [];
 
     addStudent(){
+        let classDefault : string[]=['C0223G1','C0223H1','C0223A1','C0223E1'];
         var studentID = (this.students.length > 0) ? this.students.length : 1;
     
         let studentName = readlineSync.question('Name: ');
-        let studentClass = readlineSync.question('Class: ');
+        let studentClass = readlineSync.keyInSelect(classDefault,`Enter class: `);
         let studentAddress = readlineSync.question('Address: ');
         let studentScore = readlineSync.question('Score: ');
         let studentHobby = readlineSync.question('Hobby: ');
@@ -76,7 +77,8 @@ export class StudentManager {
                     }
                     break;
                 case 2 :
-                    let studentClass = readlineSync.question('Class: ');
+                    let classDefault : string[]=['C0223G1','C0223H1','C0223A1','C0223E1'];
+                    let studentClass = readlineSync.keyInSelect(classDefault,`Enter class: `);
                     if(studentClass && (this.students[indexUser].studentClass = studentClass)){
                         console.log("Edit thanh cong");
                     }
